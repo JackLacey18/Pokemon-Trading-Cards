@@ -1,0 +1,21 @@
+
+SELECT standards_table.pokemon,
+standards_table.generation,
+standards_table.standard_price,
+holos_table.reverse_holo_price
+FROM
+
+-- STANDARD POKEMON SUB-QUERY
+(SELECT * FROM
+(SELECT pokemon, card_type, CONCAT(generation,' ',card_number)AS generation,price AS standard_price FROM pokemon) AS table1
+WHERE card_type = 'STANDARD') AS standards_table
+
+INNER JOIN
+
+-- REVERSE HOLO POKEMON SUB-QUERY
+(SELECT * FROM 
+(SELECT pokemon, card_type, CONCAT(generation,' ',card_number)AS generation,price as reverse_holo_price FROM pokemon) AS table1
+WHERE card_type = 'REVERSE HOLO') AS holos_table
+
+ON standards_table.generation = holos_table.generation
+
